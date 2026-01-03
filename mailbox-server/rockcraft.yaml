@@ -1,4 +1,4 @@
-name: magic-wormhole-mailbox-server-rock
+name: magic-wormhole-mailbox-server
 title: Magic Wormhole Mailbox Server
 base: bare
 build-base: ubuntu@24.04
@@ -8,15 +8,14 @@ description: |
   Containerized Magic Wormhole mailbox server, built directly from
   https://github.com/magic-wormhole/magic-wormhole-mailbox-server. Provides
   the rendezvous point that enables end-to-end encrypted, PAKE-backed file
-  and message handoffs via magic-wormhole clients in a minimal, rootless
-  rock suitable for secure deployment.
+  and message handoffs via magic-wormhole clients.
 source-code: https://github.com/magic-wormhole/magic-wormhole-mailbox-server
 license: MIT
 contact:
   - dev@zmraines.com
 issues:
   - https://github.com/magic-wormhole/magic-wormhole-mailbox-server/issues
-platforms: # the platforms this rock should be built on and run on
+platforms:
   amd64:
 
 run-user: _daemon_
