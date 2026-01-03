@@ -1,0 +1,39 @@
+name: magic-wormhole-transit-relay
+title: Magic Wormhole Transit Relay
+base: bare
+build-base: ubuntu@24.04
+version: "0.4.0"
+summary: Secure transit relay service that ferries encrypted Magic Wormhole payloads
+description: |
+  Containerized Magic Wormhole transit relay built directly from
+  https://github.com/magic-wormhole/magic-wormhole-transit-relay. Provides
+  the TCP relay that shuttles encrypted payloads between Magic Wormhole
+  peers, behind NATs and firewalls.
+source-code: https://github.com/magic-wormhole/magic-wormhole-transit-relay
+license: MIT
+contact:
+  - dev@zmraines.com
+issues:
+  - https://github.com/magic-wormhole/magic-wormhole-transit-relay/issues
+platforms:
+  amd64:
+
+run-user: _daemon_
+
+parts:
+  server:
+    plugin: python
+    stage-packages:
+      - python3.12-venv_ensurepip
+      - python3-pkg-resources_libs
+    python-packages:
+      - magic-wormhole-transit-relay==0.4.0
+    source: https://github.com/magic-wormhole/magic-wormhole-transit-relay.git
+    source-tag: 0.4.0
+
+services:
+  twisted:
+    override: replace
+    command: twist transitrelay
+    startup: enabled
+    user: _daemon_
