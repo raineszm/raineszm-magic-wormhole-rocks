@@ -1,5 +1,6 @@
 name: magic-wormhole-mailbox-server-rock
-base: ubuntu@24.04
+base: bare
+build-base: ubuntu@24.04
 version: "0.5.1"
 summary: Single-line elevator pitch for your amazing rock # 79 char long summary
 description: |
@@ -16,9 +17,7 @@ parts:
   server:
     plugin: python
     stage-packages:
-      # - base-files
-      - python3-venv
-      - python3
+      - python3.12-venv_ensurepip
     python-packages:
       - magic-wormhole-mailbox-server==0.5.1
     source: https://github.com/magic-wormhole/magic-wormhole-mailbox-server.git
@@ -27,6 +26,9 @@ parts:
       craftctl default
       mkdir -p ${CRAFT_PART_INSTALL}/app
       chmod 1777 ${CRAFT_PART_INSTALL}/app
+    override-prime: |
+      craftctl default
+      ln -s /usr/bin/python3.12 $CRAFT_PRIME/usr/bin/python3
 
 services:
   twisted:
