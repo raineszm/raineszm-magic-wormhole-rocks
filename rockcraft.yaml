@@ -1,6 +1,6 @@
 name: magic-wormhole-mailbox-server-rock
 base: ubuntu@24.04
-version: "0.1" # just for humans. Semantic versioning is recommended
+version: "0.5.1"
 summary: Single-line elevator pitch for your amazing rock # 79 char long summary
 description: |
   This is magic-wormhole-mailbox-server-rock's description. You have a paragraph or two to tell the
@@ -14,10 +14,15 @@ run-user: _daemon_
 
 parts:
   server:
-    plugin: nil
+    plugin: python
     stage-packages:
-      - python3-magic-wormhole-mailbox-server
-      - python3-twisted
+      # - base-files
+      - python3-venv
+      - python3
+    python-packages:
+      - magic-wormhole-mailbox-server==0.5.1
+    source: https://github.com/magic-wormhole/magic-wormhole-mailbox-server.git
+    source-tag: 0.5.1
     override-build: |
       craftctl default
       mkdir -p ${CRAFT_PART_INSTALL}/app
@@ -26,6 +31,7 @@ parts:
 services:
   twisted:
     override: replace
-    command: twist3 wormhole-mailbox --usage-db=usage.sqlite
+    command: twist wormhole-mailbox --usage-db=usage.sqlite
     startup: enabled
     working-dir: /app
+    user: _daemon_
